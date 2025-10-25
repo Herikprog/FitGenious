@@ -24,7 +24,7 @@ app.post('/api/genius', async (req, res) => {
     if (!process.env.GEMINI_API_KEY) {
         return res.status(500).json({ 
             error: 'Configuração do servidor incompleta',
-            text: 'API key não configurada no Vercel. Configure GEMINI_API_KEY nas variáveis de ambiente.'
+            text: 'API key não configurada no Vercel.'
         });
     }
 
@@ -35,14 +35,37 @@ app.post('/api/genius', async (req, res) => {
             apiKey: process.env.GEMINI_API_KEY 
         });
 
-        const systemPrompt = `Você é o FitGenious Assistant, consultor especialista em marketing digital e crescimento para coaches de fitness online. A FitGenious é um serviço premium que ajuda coaches a escalar seus negócios, atraindo de 3 a 5 clientes de alto valor por semana por meio de conteúdo estratégico. Oferecemos estratégias de conteúdo, edição profissional de vídeos e gestão de redes sociais, com resultados comprovados e garantia de satisfação. Com base na pergunta do cliente: "${message}", forneça uma resposta profissional, prática e focada em estratégias de marketing digital comprovadas para ajudar o coach a crescer seu negócio.`;
+        const systemPrompt = `Você é o FitGenious Assistant, consultor especializado em marketing digital para coaches de fitness.
+
+SOBRE A FITGENIOUS:
+Serviço premium para coaches de fitness
+Foco em atrair 3-5 clientes por semana através de conteúdo estratégico
+Estratégia de conteúdo, edição de vídeos, gestão de redes sociais
+
+DIRETRIZES DE RESPOSTA:
+- Seja direto e prático
+- Linguagem profissional
+- Foco em marketing digital para fitness
+- RESPOSTA NÃO PODE PASSAR DE 150 CARACTERES
+- Seja conciso e objetivo
+
+PERGUNTA: "${message}"
+
+Responda de forma extremamente concisa dentro do limite de 150 caracteres.`;
 
         const response = await ai.models.generateContent({
             model: "gemini-2.0-flash-exp",
             contents: systemPrompt
         });
 
-        const responseText = response?.text || 'Desculpe, não consegui gerar uma resposta.';
+        let responseText = response?.text || 'Desculpe, não consegui gerar uma resposta.';
+        
+        // Garantir que não passe de 150 caracteres
+        if (responseText.length > 150) {
+            responseText = responseText.substring(0, 147) + '...';
+        }
+        
+        console.log('Resposta gerada:', responseText.length, 'caracteres');
         
         res.json({ 
             text: responseText,
@@ -83,6 +106,3 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export default app;
-
-
-
