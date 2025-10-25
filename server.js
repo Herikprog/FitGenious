@@ -1,6 +1,7 @@
-// server.js - COMMONJS VERSION
-const express = require('express');
-const cors = require('cors');
+// server.js - ES MODULES VERSION
+import express from 'express';
+import cors from 'cors';
+import { GoogleGenAI } from '@google/genai';
 
 const app = express();
 
@@ -23,15 +24,12 @@ app.post('/api/genius', async (req, res) => {
     if (!process.env.GEMINI_API_KEY) {
         return res.status(500).json({ 
             error: 'Configuração do servidor incompleta',
-            text: 'API key não configurada no servidor.'
+            text: 'API key não configurada no Vercel. Configure GEMINI_API_KEY nas variáveis de ambiente.'
         });
     }
 
     try {
-        console.log('Processando mensagem com Gemini:', message.substring(0, 50) + '...');
-        
-        // Import dinâmico do Google GenAI
-        const { GoogleGenAI } = await import('@google/genai');
+        console.log('Processando mensagem com Gemini...');
         
         const ai = new GoogleGenAI({ 
             apiKey: process.env.GEMINI_API_KEY 
@@ -45,12 +43,6 @@ Foco em atrair 3-5 clientes de alto valor por semana através de conteúdo estra
 Oferecemos: estratégia de conteúdo, edição profissional de vídeos, gestão de redes sociais
 Resultados comprovados com garantia de satisfação
 
-SUA IDENTIDADE:
-Especialista em marketing digital para fitness
-Consultor profissional e direto ao ponto
-Linguagem corporativa e motivacional
-Focado exclusivamente em negócios de fitness online
-
 PERGUNTA DO CLIENTE: "${message}"
 
 Forneça uma resposta profissional focada em ajudar o coach a crescer seu negócio através de estratégias de marketing digital comprovadas.`;
@@ -61,7 +53,6 @@ Forneça uma resposta profissional focada em ajudar o coach a crescer seu negóc
         });
 
         const responseText = response?.text || 'Desculpe, não consegui gerar uma resposta.';
-        console.log('Resposta do Gemini gerada com sucesso');
         
         res.json({ 
             text: responseText,
@@ -71,7 +62,6 @@ Forneça uma resposta profissional focada em ajudar o coach a crescer seu negóc
     } catch (err) {
         console.error('Erro ao acessar a API Gemini:', err);
         res.status(500).json({ 
-            error: err.message,
             text: 'Erro interno do servidor. Tente novamente.'
         });
     }
@@ -86,4 +76,20 @@ app.get('/api/health', (req, res) => {
     });
 });
 
-module.exports = app;
+// Rota de teste
+app.get('/api/test', (req, res) => {
+    res.json({ 
+        message: 'API está funcionando!',
+        timestamp: new Date().toISOString()
+    });
+});
+
+const PORT = process.env.PORT || 3000;
+
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Servidor rodando na porta ${PORT}`);
+    });
+}
+
+export default app;
