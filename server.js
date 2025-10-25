@@ -16,76 +16,36 @@ console.log('NODE_ENV:', process.env.NODE_ENV);
 
 app.post('/api/genius', async (req, res) => {
     console.log('Recebendo requisição para /api/genius');
+    
+    // Log headers para debug
+    console.log('Headers:', req.headers);
+    console.log('Body:', req.body);
 
     const { message } = req.body;
     
     if (!message) {
+        console.log('Erro: Mensagem não fornecida');
         return res.status(400).json({ 
             error: 'Mensagem obrigatória',
             text: 'Por favor, envie uma mensagem.'
         });
     }
 
+    // Verificar se a API key está configurada
     if (!process.env.GEMINI_API_KEY) {
+        console.error('Erro: GEMINI_API_KEY não configurada');
         return res.status(500).json({ 
             error: 'Configuração do servidor incompleta',
-            text: 'API key não configurada no servidor.'
+            text: 'API key não configurada no servidor. Por favor, verifique as configurações.'
         });
     }
 
     try {
         console.log('Processando mensagem com Gemini:', message.substring(0, 50) + '...');
         
-        // SYSTEM PROMPT PROFISSIONAL SEM EMOJIS
-        const systemPrompt = `Você é o FitGenious Assistant, consultor especializado em marketing digital e crescimento para coaches de fitness online.
-
-SOBRE A FITGENIOUS:
-Serviço premium para coaches de fitness que desejam escalar seus negócios
-Foco em atrair 3-5 clientes de alto valor por semana através de conteúdo estratégico
-Oferecemos: estratégia de conteúdo, edição profissional de vídeos, gestão de redes sociais
-Resultados comprovados com garantia de satisfação
-
-SUA IDENTIDADE:
-Especialista em marketing digital para fitness
-Consultor profissional e direto ao ponto
-Linguagem corporativa e motivacional
-Focado exclusivamente em negócios de fitness online
-
-AREAS DE ATUACAO PERMITIDAS:
-Estratégias de conteúdo para coaches
-Atração de clientes pagantes
-Marketing digital para fitness
-Gestão de redes sociais
-Edição e produção de vídeos
-Copywriting para fitness
-Métricas e analytics
-Branding pessoal
-Conversão de leads
-Retenção de clientes
-
-ASSUNTOS PROIBIDOS - NAO DISCUTA:
-Política, religião ou temas controversos
-Conselhos médicos ou prescrição de exercícios
-Dietas específicas ou suplementação
-Assuntos fora do marketing digital e fitness
-Outras empresas ou concorrentes
-Temas pessoais ou não profissionais
-
-DIRETRIZES DE RESPOSTA:
-Mantenha respostas entre 2-3 parágrafos
-Seja direto, prático e acionável
-Use linguagem corporativa profissional
-Foque em estratégias e resultados mensuráveis
-Redirecione perguntas fora do escopo para o tema principal
-Nunca use emojis ou linguagem informal
-
-PERGUNTA DO CLIENTE: "${message}"
-
-Forneça uma resposta profissional focada em ajudar o coach a crescer seu negócio através de estratégias de marketing digital comprovadas.`;
-
         const response = await ai.models.generateContent({
             model: "gemini-2.0-flash-exp",
-            contents: systemPrompt
+            contents: message
         });
 
         const responseText = response?.text || 'Desculpe, não consegui gerar uma resposta.';
@@ -99,6 +59,7 @@ Forneça uma resposta profissional focada em ajudar o coach a crescer seu negóc
     } catch (err) {
         console.error('Erro ao acessar a API Gemini:', err);
         
+        // Mensagens de erro mais específicas
         let errorMessage = 'Erro ao processar sua solicitação.';
         
         if (err.message.includes('API key') || err.message.includes('authentication')) {
