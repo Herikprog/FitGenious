@@ -75,11 +75,12 @@ Resposta (150-200 caracteres):`;
   }
 });
 
-// === Fallback: envia o index.html para qualquer rota não-API ===
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+
 // === Exporta para Vercel ===
 export const handler = serverless(app);
 export default app;
+
