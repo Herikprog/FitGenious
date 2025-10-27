@@ -1,12 +1,20 @@
 import express from 'express';
 import cors from 'cors';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const app = express();
 
+// Configurar __dirname para ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 app.use(cors());
 app.use(express.json());
-app.use(express.static('.'));
+
+// Servir arquivos estáticos corretamente
+app.use(express.static(__dirname));
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -54,7 +62,7 @@ Responda de forma profissional sobre:
 
 Pergunta: "${message}"
 
-Resposta (150-200 caracteres):`;
+Resposta (2-3 parágrafos):`;
 
         const result = await model.generateContent(prompt);
         const response = await result.response;
@@ -73,14 +81,24 @@ Resposta (150-200 caracteres):`;
     }
 });
 
-// CORREÇÃO: Adicionar listener na porta
-const PORT = process.env.PORT || 3000;
-
-// Iniciar servidor
-app.listen(PORT, () => {
-    console.log(`🚀 Servidor FitGenious rodando na porta ${PORT}`);
-    console.log(`🔗 Health check: http://localhost:${PORT}/api/health`);
+// Rota para servir o index.html
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// CORREÇÃO: Remover export default
-// export default app;
+// Rota para servir CSS e JS
+app.get('/styles.css', (req, res) => {
+    res.sendFile(path.join(__dirname, 'styles.css'));
+});
+
+app.get('/script.js', (req, res) => {
+    res.sendFile(path.join(__dirname, 'script.js'));
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`🚀 Servidor FitGenious rodando na porta ${PORT}`);
+    console.log(`🔗 Acesse: http://localhost:${PORT}`);
+    console.log(`🔗 Health check: http://localhost:${PORT}/api/health`);
+});
