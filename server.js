@@ -13,29 +13,17 @@ const __dirname = path.dirname(__filename);
 app.use(cors());
 app.use(express.json());
 
-// Servir arquivos estáticos corretamente
-app.use(express.static(__dirname));
-
-// Rota específica para arquivos CSS e JS
-app.get('/styles.css', (req, res) => {
-    const cssPath = path.join(__dirname, 'styles.css');
-    if (fs.existsSync(cssPath)) {
-        res.setHeader('Content-Type', 'text/css');
-        res.sendFile(cssPath);
-    } else {
-        res.status(404).send('CSS not found');
+// Servir arquivos estáticos
+app.use(express.static(__dirname, {
+    setHeaders: (res, filePath) => {
+        const ext = path.extname(filePath);
+        if (ext === '.css') {
+            res.setHeader('Content-Type', 'text/css');
+        } else if (ext === '.js') {
+            res.setHeader('Content-Type', 'application/javascript');
+        }
     }
-});
-
-app.get('/script.js', (req, res) => {
-    const jsPath = path.join(__dirname, 'script.js');
-    if (fs.existsSync(jsPath)) {
-        res.setHeader('Content-Type', 'application/javascript');
-        res.sendFile(jsPath);
-    } else {
-        res.status(404).send('JS not found');
-    }
-});
+}));
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -46,7 +34,7 @@ app.get('/api/health', (req, res) => {
     });
 });
 
-// API Gemini
+// CORREÇÃO: Mudar a rota para /api/genius (igual ao frontend)
 app.post('/api/genius', async (req, res) => {
     try {
         const { message } = req.body;
@@ -55,13 +43,20 @@ app.post('/api/genius', async (req, res) => {
             return res.status(400).json({ text: 'Por favor, envie uma mensagem.' });
         }
 
+        console.log('📨 Mensagem recebida:', message);
+
+        // Se não tiver API key, retorna resposta simulada
         if (!process.env.GEMINI_API_KEY) {
+            console.log('⚠️  Gemini API Key não configurada');
             return res.json({ 
-                text: "Olá! Sou o assistente do FitGenious. Para respostas completas, configure a API key do Gemini.",
+                text: "Olá! Sou o assistente do FitGenious. No momento estou em modo de demonstração. Para respostas completas com IA, configure a API key do Gemini nas variáveis de ambiente.",
                 simulated: true
             });
         }
 
+        console.log('🔑 Gemini API Key encontrada');
+
+        // Gemini real
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         const model = genAI.getGenerativeModel({ 
             model: "gemini-1.5-flash",
@@ -73,34 +68,44 @@ app.post('/api/genius', async (req, res) => {
 
         const prompt = `Você é o FitGenious Assistant, especialista em marketing digital para coaches de fitness.
 
-Responda de forma profissional sobre:
-- Estratégias de conteúdo
-- Atração de clientes  
-- Marketing digital
+Contexto: FitGenious é uma agência que ajuda coaches de fitness a atrair clientes através de conteúdo estratégico.
+
+Responda de forma profissional, amigável e útil sobre:
+- Estratégias de conteúdo para coaches de fitness
+- Como atrair clientes online
+- Marketing digital para profissionais de fitness
 - Gestão de redes sociais
+- Dicas para criar conteúdo engajante
+- Como converter seguidores em clientes
 
-Pergunta: "${message}"
+Mantenha a resposta em português, seja direto e ofereça valor.
 
-Resposta (2-3 parágrafos):`;
+Pergunta do usuário: "${message}"
 
+Resposta (seja útil e específico):`;
+
+        console.log('🤖 Enviando para Gemini...');
         const result = await model.generateContent(prompt);
         const response = await result.response;
+        const responseText = response.text();
         
+        console.log('✅ Resposta do Gemini:', responseText);
+
         res.json({ 
-            text: response.text(),
+            text: responseText,
             timestamp: new Date().toISOString()
         });
 
     } catch (error) {
-        console.error('Erro Gemini:', error);
-        res.json({ 
-            text: "Serviço temporariamente indisponível. Entre em contato conosco diretamente.",
+        console.error('❌ Erro Gemini:', error);
+        res.status(500).json({ 
+            text: "Desculpe, estou com problemas técnicos no momento. Você pode entrar em contato conosco diretamente pelo WhatsApp: +351 963 828 378",
             error: true
         });
     }
 });
 
-// Rota para todas as outras requisições (servir index.html)
+// Rota para servir o index.html
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
@@ -109,10 +114,8 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`🚀 Servidor FitGenious rodando na porta ${PORT}`);
-    console.log(`📁 Diretório: ${__dirname}`);
     console.log(`🔗 Acesse: http://localhost:${PORT}`);
-    console.log('📋 Arquivos no diretório:');
-    fs.readdirSync(__dirname).forEach(file => {
-        console.log(`   - ${file}`);
-    });
+    console.log(`🔍 Health check: http://localhost:${PORT}/api/health`);
+    console.log(`🤖 API Gemini: http://localhost:${PORT}/api/genius`);
+    console.log(`🔑 Gemini API Key configurada: ${!!process.env.GEMINI_API_KEY}`);
 });
