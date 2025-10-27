@@ -3,10 +3,10 @@ import cors from 'cors';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
 
 const app = express();
 
-// Configurar __dirname para ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -15,6 +15,27 @@ app.use(express.json());
 
 // Servir arquivos estáticos corretamente
 app.use(express.static(__dirname));
+
+// Rota específica para arquivos CSS e JS
+app.get('/styles.css', (req, res) => {
+    const cssPath = path.join(__dirname, 'styles.css');
+    if (fs.existsSync(cssPath)) {
+        res.setHeader('Content-Type', 'text/css');
+        res.sendFile(cssPath);
+    } else {
+        res.status(404).send('CSS not found');
+    }
+});
+
+app.get('/script.js', (req, res) => {
+    const jsPath = path.join(__dirname, 'script.js');
+    if (fs.existsSync(jsPath)) {
+        res.setHeader('Content-Type', 'application/javascript');
+        res.sendFile(jsPath);
+    } else {
+        res.status(404).send('JS not found');
+    }
+});
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -34,7 +55,6 @@ app.post('/api/genius', async (req, res) => {
             return res.status(400).json({ text: 'Por favor, envie uma mensagem.' });
         }
 
-        // Se não tiver API key, retorna resposta simulada
         if (!process.env.GEMINI_API_KEY) {
             return res.json({ 
                 text: "Olá! Sou o assistente do FitGenious. Para respostas completas, configure a API key do Gemini.",
@@ -42,7 +62,6 @@ app.post('/api/genius', async (req, res) => {
             });
         }
 
-        // Gemini real
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         const model = genAI.getGenerativeModel({ 
             model: "gemini-1.5-flash",
@@ -81,24 +100,19 @@ Resposta (2-3 parágrafos):`;
     }
 });
 
-// Rota para servir o index.html
-app.get('/', (req, res) => {
+// Rota para todas as outras requisições (servir index.html)
+app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-// Rota para servir CSS e JS
-app.get('/styles.css', (req, res) => {
-    res.sendFile(path.join(__dirname, 'styles.css'));
-});
-
-app.get('/script.js', (req, res) => {
-    res.sendFile(path.join(__dirname, 'script.js'));
 });
 
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`🚀 Servidor FitGenious rodando na porta ${PORT}`);
+    console.log(`📁 Diretório: ${__dirname}`);
     console.log(`🔗 Acesse: http://localhost:${PORT}`);
-    console.log(`🔗 Health check: http://localhost:${PORT}/api/health`);
+    console.log('📋 Arquivos no diretório:');
+    fs.readdirSync(__dirname).forEach(file => {
+        console.log(`   - ${file}`);
+    });
 });
