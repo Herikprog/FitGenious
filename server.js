@@ -1,15 +1,21 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import serverless from 'serverless-http';
 
-const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
+const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public')); // opcional, se tiver site estático
 
-// ===== HEALTH CHECK =====
+// === Servir arquivos estáticos (tudo na mesma pasta) ===
+app.use(express.static(__dirname));
+
+// === Health check ===
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'OK',
@@ -18,7 +24,7 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// ===== GEMINI API =====
+// === Gemini API ===
 app.post('/api/genius', async (req, res) => {
   try {
     const { message } = req.body;
@@ -26,7 +32,7 @@ app.post('/api/genius', async (req, res) => {
       return res.status(400).json({ text: 'Por favor, envie uma mensagem.' });
     }
 
-    // Resposta simulada se não houver chave
+    // Se não tiver API key, retorna resposta simulada
     if (!process.env.GEMINI_API_KEY) {
       return res.json({
         text: 'Olá! Sou o assistente do FitGenious. Para respostas completas, configure a API key do Gemini.',
@@ -34,7 +40,7 @@ app.post('/api/genius', async (req, res) => {
       });
     }
 
-    // Gemini real
+    // === Gemini real ===
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({
       model: 'gemini-1.5-flash',
@@ -69,6 +75,11 @@ Resposta (150-200 caracteres):`;
   }
 });
 
-// ===== EXPORT PARA VERCEL =====
+// === Fallback: envia o index.html para qualquer rota não-API ===
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// === Exporta para Vercel ===
 export const handler = serverless(app);
 export default app;
