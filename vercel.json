@@ -33,7 +33,7 @@
     },
     {
       "src": "/(.*\\.(?:js|css|png|mp4|ico|html))$",
-      "handle": "filesystem"
+      "dest": "/$1"
     },
     {
       "src": "/(.*)",
