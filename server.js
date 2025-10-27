@@ -54,7 +54,7 @@ Responda de forma profissional sobre:
 
 Pergunta: "${message}"
 
-Resposta (2-3 parágrafos):`;
+Resposta (150-200 caracteres):`;
 
         const result = await model.generateContent(prompt);
         const response = await result.response;
@@ -73,4 +73,14 @@ Resposta (2-3 parágrafos):`;
     }
 });
 
-export default app;
+// CORREÇÃO: Adicionar listener na porta
+const PORT = process.env.PORT || 3000;
+
+// Iniciar servidor
+app.listen(PORT, () => {
+    console.log(`🚀 Servidor FitGenious rodando na porta ${PORT}`);
+    console.log(`🔗 Health check: http://localhost:${PORT}/api/health`);
+});
+
+// CORREÇÃO: Remover export default
+// export default app;
