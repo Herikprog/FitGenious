@@ -104,43 +104,38 @@ document.querySelectorAll('.magnetic').forEach(button => {
 const videoProjects = [
     { 
         title: "Client Transformation", 
-        video: "https://drive.google.com/file/d/1cEEy0fQbYVUoRfLcn4pvChcq9JM2E4sr/preview",
+        video: "https://drive.google.com/file/d/1DN0UDSX_0MmgApvPXqztfD4GauZS9efc/preview",
         description: "Before & after results showcase"
     },
     { 
         title: "Workout Routine", 
-        video: "https://drive.google.com/file/d/SEU_ID_DO_VIDEO_2/preview",
+        video: "https://drive.google.com/file/d/1QkHksdwELBSjpKtYGggu3Pa9HPuQlXhH/preview",
         description: "Professional exercise demonstration"
     },
     { 
         title: "Nutrition Guide", 
-        video: "https://drive.google.com/file/d/SEU_ID_DO_VIDEO_3/preview",
+        video: "https://drive.google.com/file/d/1VFbB8V-PuUtluFkEd6tqRmquk5SOdkT4/preview",
         description: "Meal prep and diet tips"
     },
     { 
         title: "Client Testimonial", 
-        video: "https://drive.google.com/file/d/SEU_ID_DO_VIDEO_4/preview",
+        video: "https://drive.google.com/file/d/1YUfpERmbtPE-WFO6Zs5T5LJgE2NxuxyQ/preview",
         description: "Success story from our client"
     },
     { 
         title: "Training Session", 
-        video: "https://drive.google.com/file/d/SEU_ID_DO_VIDEO_5/preview",
+        video: "https://drive.google.com/file/d/1XC1CVlc5fhhA7ir6RWdOZbf7R-RDROEn/preview",
         description: "One-on-one coaching session"
     },
     { 
         title: "Training Session", 
-        video: "https://drive.google.com/file/d/SEU_ID_DO_VIDEO_5/preview",
-        description: "One-on-one coaching session"
-    },
-    { 
-        title: "Training Session", 
-        video: "https://drive.google.com/file/d/SEU_ID_DO_VIDEO_5/preview",
+        video: "https://drive.google.com/file/d/10T67anXBZd1aiWr0G6_tdLghZqz_348u/preview",
         description: "One-on-one coaching session"
     }
 ];
 
 // =======================
-// Variáveis do carrossel
+// Variáveis do carrossel de vídeos
 // =======================
 let currentVideoSlide = 0;
 let totalVideoSlides = videoProjects.length;
@@ -468,6 +463,330 @@ function initVideoAutoSlidePause() {
 }
 
 // =======================
+// IMAGE CAROUSEL FOR RESULTS SECTION
+// =======================
+const imageProjects = [
+    { 
+        title: "Content Creation", 
+        image: "https://drive.google.com/uc?id=SEU_ID_DA_IMAGEM_1",
+        description: "Creating viral fitness content"
+    },
+    { 
+        title: "Social Media Growth", 
+        image: "https://drive.google.com/uc?id=SEU_ID_DA_IMAGEM_2", 
+        description: "Building engaged communities online"
+    },
+    { 
+        title: "Fitness Branding", 
+        image: "https://drive.google.com/uc?id=SEU_ID_DA_IMAGEM_3",
+        description: "Developing successful fitness brands"
+    },
+    { 
+        title: "Client Results", 
+        image: "https://drive.google.com/uc?id=SEU_ID_DA_IMAGEM_4",
+        description: "Real transformations from our methods"
+    },
+    { 
+        title: "Content Strategy", 
+        image: "https://drive.google.com/uc?id=SEU_ID_DA_IMAGEM_5",
+        description: "Proven strategies for viral content"
+    }
+];
+
+let currentImageSlide = 0;
+let totalImageSlides = imageProjects.length;
+let imageAutoSlideInterval = null;
+let isImageUserInteracting = false;
+
+// Initialize Image Carousel
+function initImageCarousel() {
+    renderImageSlides();
+    setupImageControls();
+    updateImageCarousel();
+    updateImageIndicators();
+    updateImageControlButtons();
+    startImageAutoSlide();
+    initImageAutoSlidePause();
+}
+
+// Render Image Slides
+function renderImageSlides() {
+    const carousel = document.getElementById('imageCarouselTrack');
+    const indicatorsContainer = document.getElementById('imageCarouselDots');
+    if (!carousel || !indicatorsContainer) return;
+
+    carousel.innerHTML = '';
+    indicatorsContainer.innerHTML = '';
+
+    imageProjects.forEach((project, index) => {
+        // Slide
+        const slide = document.createElement('div');
+        slide.className = 'carousel-slide';
+        slide.style.position = 'relative';
+
+        // Image Container
+        const imageContainer = document.createElement('div');
+        imageContainer.className = 'image-wrapper';
+
+        // Loading State
+        const loading = document.createElement('div');
+        loading.className = 'image-loading';
+        imageContainer.appendChild(loading);
+
+        // Image Element
+        const img = document.createElement('img');
+        img.src = project.image;
+        img.alt = project.title;
+        img.className = 'carousel-image';
+        img.onload = () => loading.remove();
+        img.onerror = () => {
+            loading.remove();
+            imageContainer.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; background: #000; color: white; border-radius: 24px; padding: 20px; text-align: center;">
+                    <p style="margin-bottom: 10px; font-size: 1.1rem;">Image not available</p>
+                    <small style="opacity: 0.8;">Check Google Drive link</small>
+                </div>
+            `;
+        };
+
+        imageContainer.appendChild(img);
+        slide.appendChild(imageContainer);
+
+        // Content
+        const content = document.createElement('div');
+        content.className = 'carousel-content';
+        
+        const title = document.createElement('h4');
+        title.textContent = project.title;
+        
+        const description = document.createElement('p');
+        description.textContent = project.description;
+
+        content.appendChild(title);
+        content.appendChild(description);
+        slide.appendChild(content);
+
+        carousel.appendChild(slide);
+
+        // Indicator
+        const indicator = document.createElement('button');
+        indicator.className = 'carousel-dot';
+        indicator.addEventListener('click', () => { 
+            isImageUserInteracting = true;
+            goToImageSlide(index); 
+            resetImageAutoSlide();
+            setTimeout(() => { isImageUserInteracting = false; }, 3000);
+        });
+        indicatorsContainer.appendChild(indicator);
+    });
+}
+
+// Setup Image Controls
+function setupImageControls() {
+    const prevBtn = document.getElementById('imagePrevBtn');
+    const nextBtn = document.getElementById('imageNextBtn');
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => { 
+            isImageUserInteracting = true;
+            previousImageSlide(); 
+            resetImageAutoSlide();
+            setTimeout(() => { isImageUserInteracting = false; }, 3000);
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => { 
+            isImageUserInteracting = true;
+            nextImageSlide(); 
+            resetImageAutoSlide();
+            setTimeout(() => { isImageUserInteracting = false; }, 3000);
+        });
+    }
+
+    const carousel = document.getElementById('imageCarouselTrack');
+    if (!carousel) return;
+
+    let startX = 0;
+    let isDragging = false;
+
+    // Touch events
+    carousel.addEventListener('touchstart', e => { 
+        startX = e.touches[0].clientX; 
+        isDragging = true;
+        isImageUserInteracting = true;
+        stopImageAutoSlide();
+    }, { passive: true });
+    
+    carousel.addEventListener('touchmove', e => { 
+        if (isDragging && Math.abs(e.touches[0].clientX - startX) > 10) {
+            e.preventDefault(); 
+        }
+    }, { passive: false });
+    
+    carousel.addEventListener('touchend', e => {
+        handleImageSwipe(e.changedTouches[0].clientX);
+        setTimeout(() => { isImageUserInteracting = false; }, 3000);
+    });
+
+    // Mouse events
+    carousel.addEventListener('mousedown', e => { 
+        startX = e.clientX; 
+        isDragging = true;
+        isImageUserInteracting = true;
+        stopImageAutoSlide();
+    });
+    
+    carousel.addEventListener('mousemove', e => { 
+        if (isDragging) e.preventDefault(); 
+    });
+    
+    carousel.addEventListener('mouseup', e => {
+        handleImageSwipe(e.clientX);
+        setTimeout(() => { isImageUserInteracting = false; }, 3000);
+    });
+    
+    carousel.addEventListener('mouseleave', () => { 
+        isDragging = false; 
+    });
+
+    function handleImageSwipe(endX) {
+        if (!isDragging) return;
+        isDragging = false;
+        const diffX = startX - endX;
+        if (Math.abs(diffX) > 50) {
+            diffX > 0 ? nextImageSlide() : previousImageSlide();
+            resetImageAutoSlide();
+        }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', e => {
+        const carouselElement = document.querySelector('.results-image .image-carousel');
+        if (!isElementInViewport(carouselElement)) return;
+        
+        if (e.key === 'ArrowLeft') { 
+            isImageUserInteracting = true;
+            previousImageSlide(); 
+            resetImageAutoSlide();
+            setTimeout(() => { isImageUserInteracting = false; }, 3000);
+        }
+        if (e.key === 'ArrowRight') { 
+            isImageUserInteracting = true;
+            nextImageSlide(); 
+            resetImageAutoSlide();
+            setTimeout(() => { isImageUserInteracting = false; }, 3000);
+        }
+    });
+}
+
+// Image Carousel Navigation
+function goToImageSlide(index) { 
+    currentImageSlide = index; 
+    updateImageCarousel(); 
+    updateImageIndicators(); 
+    updateImageControlButtons(); 
+}
+
+function nextImageSlide() { 
+    currentImageSlide = (currentImageSlide + 1) % totalImageSlides; 
+    updateImageCarousel(); 
+    updateImageIndicators(); 
+    updateImageControlButtons(); 
+}
+
+function previousImageSlide() { 
+    currentImageSlide = (currentImageSlide - 1 + totalImageSlides) % totalImageSlides; 
+    updateImageCarousel(); 
+    updateImageIndicators(); 
+    updateImageControlButtons(); 
+}
+
+// Update Image Carousel Visuals
+function updateImageCarousel() {
+    const slides = document.querySelectorAll('#imageCarouselTrack .carousel-slide');
+    if (slides.length === 0) return;
+
+    const slideWidth = 100;
+    const translateX = -currentImageSlide * slideWidth;
+    
+    slides.forEach((slide, index) => {
+        slide.style.transform = `translateX(${translateX}%)`;
+        slide.style.transition = 'transform 0.6s ease-in-out';
+        slide.style.opacity = '1';
+    });
+}
+
+function updateImageIndicators() {
+    document.querySelectorAll('#imageCarouselDots .carousel-dot').forEach((ind, i) => {
+        ind.classList.toggle('active', i === currentImageSlide);
+    });
+}
+
+function updateImageControlButtons() {
+    const prevBtn = document.getElementById('imagePrevBtn');
+    const nextBtn = document.getElementById('imageNextBtn');
+    
+    if (totalImageSlides <= 1) { 
+        if (prevBtn) prevBtn.style.display = 'none'; 
+        if (nextBtn) nextBtn.style.display = 'none'; 
+        return; 
+    }
+    
+    if (prevBtn) { 
+        prevBtn.style.display = 'block'; 
+        prevBtn.disabled = currentImageSlide === 0;
+    }
+    
+    if (nextBtn) { 
+        nextBtn.style.display = 'block'; 
+        nextBtn.disabled = currentImageSlide === totalImageSlides - 1;
+    }
+}
+
+// Image Auto-slide
+function startImageAutoSlide() { 
+    if (totalImageSlides <= 1 || isImageUserInteracting) return;
+    stopImageAutoSlide();
+    imageAutoSlideInterval = setInterval(() => {
+        if (!isImageUserInteracting) {
+            nextImageSlide();
+        }
+    }, 5000);
+}
+
+function stopImageAutoSlide() { 
+    if (imageAutoSlideInterval) { 
+        clearInterval(imageAutoSlideInterval); 
+        imageAutoSlideInterval = null; 
+    } 
+}
+
+function resetImageAutoSlide() { 
+    stopImageAutoSlide(); 
+    if (!isImageUserInteracting) {
+        setTimeout(() => {
+            startImageAutoSlide();
+        }, 1000);
+    }
+}
+
+function initImageAutoSlidePause() {
+    const container = document.querySelector('.results-image .image-carousel');
+    if (!container) return;
+    
+    container.addEventListener('mouseenter', () => {
+        isImageUserInteracting = true;
+        stopImageAutoSlide();
+    });
+    
+    container.addEventListener('mouseleave', () => {
+        isImageUserInteracting = false;
+        startImageAutoSlide();
+    });
+}
+
+// =======================
 // Utilities
 // =======================
 function isElementInViewport(el) {
@@ -597,8 +916,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.shape').forEach((s,i) => s.style.animationDelay = `${i*2}s`);
     document.querySelectorAll('.floating-element').forEach((el,i) => el.style.animationDelay = `${i*1.5}s`);
     
-    // Initialize video carousel
+    // Initialize both carousels
     initVideoCarousel();
+    initImageCarousel(); // Novo carrossel de imagens
 });
 
 // ========== PERFORMANCE SCROLL OPTIMIZATION ==========
