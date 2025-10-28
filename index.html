@@ -66,10 +66,10 @@
                     <span>✨ Exclusive for online fitness coaches</span>
                 </div>
                 <h1 class="hero-title">
-                    <span class="title-line">Create a personal brand</span>
-                    <span class="title-line accent">engaging and profitable</span>
+                    <span class="title-line">Build an engaging, profitable personal brand while</span>
+                    <span class="title-line accent">working less than 3 hours a month on content.</span>
                 </h1>
-                <p class="hero-subtitle">Attract 3 to 5 high-paying clients per week without ads, without questions, without thousands of direct messages. Exclusively for online fitness trainers.</p>
+                <p class="hero-subtitle">Attract 3–5 high-paying clients a week with no ads, no second-guessing, no thousands of DMs. Exclusive for online fitness coaches.</p>
                 
                 <!-- Video Section -->
                 <div class="video-container fade-in">
@@ -88,7 +88,7 @@
 
                 <div class="urgency-badge">
                     <div class="pulse-dot"></div>
-                    Only 5 spots available this month
+                    4+ Years on social media
                 </div>
                 
                 <div class="cta-buttons">
@@ -106,56 +106,68 @@
 
     <!-- Results Section -->
     <section class="results">
-        <div class="container">
-            <h2 class="section-title">
-                <span class="title-decorator">Proven</span>
-                Results
-            </h2>
-            <div class="results-content">
-                <div class="results-text">
-                    <div class="results-image">
-                        <img src="resultados.png" alt="Fitness Results" loading="lazy">
-                        <div class="image-glow"></div>
-                    </div>
-                    <div class="results-bio">
-                        <h3>I'm Guilherme Ferreira</h3>
-                        <p>I've generated over <span class="highlight">150M+ views</span> online and grown my own following to over <span class="highlight">200K followers</span>. I've helped fitness coaches go from struggling to get clients to fully booked with high-paying clients in less than 30 days.</p>
-                        <div class="guarantee-card">
-                            <div class="guarantee-icon">✓</div>
-                            <div class="guarantee-content">
-                                <h4>100% Money-Back Guarantee</h4>
-                                <p>If you don't get at least 3 high-paying clients in your first month, I'll refund your money. No questions asked.</p>
-                            </div>
+    <div class="container">
+        <h2 class="section-title">
+            <span class="title-decorator">Proven</span>
+            Results
+        </h2>
+        <div class="results-content">
+            <div class="results-text">
+                <div class="results-image">
+                    <!-- Image Carousel -->
+                    <div class="image-carousel">
+                        <div class="carousel-track" id="imageCarouselTrack"></div>
+                        
+                        <div class="carousel-controls">
+                            <button class="carousel-btn prev-btn" id="imagePrevBtn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 18l-6-6 6-6"/>
+                                </svg>
+                            </button>
+                            <button class="carousel-btn next-btn" id="imageNextBtn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 18l6-6-6-6"/>
+                                </svg>
+                            </button>
                         </div>
+                        
+                        <div class="carousel-dots" id="imageCarouselDots"></div>
+                    </div>
+                    <div class="image-glow"></div>
+                </div>
+                <div class="results-bio">
+                    <h3>I'm Guilherme Ferreira</h3>
+                    <p>I've generated over <span class="highlight">150M+ views</span> online across different niches, gaining <span class="highlight">200K followers</span> for my fitness brand (Fitgenious).</p>
+                    <p>Making bodybuilders like Arnold, Tom Platz, Ronnie Coleman, Lee Priest, Dorian Yates, and many more go viral.</p>
+                    <p>I've been in the social media game for over 4 years, investing thousands of dollars in programs, mentorships, and courses on content creation from some of the top gurus you can think of (Devin Jatho, Jason Cooperson, Daniel Iles, Kallaw, and more…).</p>
+                </div>
+            </div>
+            <div class="results-metrics">
+                <div class="metric-card">
+                    <div class="metric-value" id="viewsCounter">0</div>
+                    <div class="metric-label">150 million views generated</div>
+                    <div class="metric-bar">
+                        <div class="metric-progress" data-value="150"></div>
                     </div>
                 </div>
-                <div class="results-metrics">
-                    <div class="metric-card">
-                        <div class="metric-value" id="viewsCounter">0</div>
-                        <div class="metric-label">150 million views generated</div>
-                        <div class="metric-bar">
-                            <div class="metric-progress" data-value="150"></div>
-                        </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="followersCounter">0</div>
+                    <div class="metric-label">200 thousand followers reached</div>
+                    <div class="metric-bar">
+                        <div class="metric-progress" data-value="200"></div>
                     </div>
-                    <div class="metric-card">
-                        <div class="metric-value" id="followersCounter">0</div>
-                        <div class="metric-label">200 thousand followers reached</div>
-                        <div class="metric-bar">
-                            <div class="metric-progress" data-value="200"></div>
-                        </div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value">5</div>
-                        <div class="metric-label">Spots Available</div>
-                        <div class="metric-bar">
-                            <div class="metric-progress" data-value="20"></div>
-                        </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">4+</div>
+                    <div class="metric-label">Years on social media</div>
+                    <div class="metric-bar">
+                        <div class="metric-progress" data-value="100"></div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
+    </div>
+</section>
     <!-- Services Section -->
     <section class="services">
         <div class="container">
@@ -172,8 +184,8 @@
                             </svg>
                         </div>
                     </div>
-                    <h3>Exclusive Content Strategy</h3>
-                    <p>We create a custom content strategy tailored to your niche and audience, then implement it across all platforms.</p>
+                    <h3>Exclusive content strategy + implementation</h3>
+                    <p>A tailored content strategy for yourself, your niche, and ICP, with the goal of building an audience of raving fans who are engaged and ready to buy at any time.</p>
                     <div class="service-features">
                         <span>Content Planning</span>
                         <span>Platform Strategy</span>
@@ -189,8 +201,8 @@
                             </svg>
                         </div>
                     </div>
-                    <h3>Weekly Strategy Calls</h3>
-                    <p>We have weekly strategy calls to review performance, adjust tactics, and ensure you're on track to hit your goals.</p>
+                    <h3>Weekly calls</h3>
+                    <p>A weekly call to analyze your progress, address any concerns, doubts, or questions you might have, and collect feedback so we can improve and provide a better service for you.</p>
                     <div class="service-features">
                         <span>Performance Review</span>
                         <span>Strategy Adjustments</span>
@@ -207,8 +219,8 @@
                             </svg>
                         </div>
                     </div>
-                    <h3>World Class Editing</h3>
-                    <p>Our professional editors transform your raw footage into engaging, high-converting content that stands out.</p>
+                    <h3>World class editing</h3>
+                    <p>Outstanding, high-quality video editing that gets viewers addicted to your content and, most importantly, boosts your authority.</p>
                     <div class="service-features">
                         <span>Video Editing</span>
                         <span>Motion Graphics</span>
@@ -224,8 +236,8 @@
                             </svg>
                         </div>
                     </div>
-                    <h3>Everything Handled</h3>
-                    <p>From content creation to posting and engagement, we handle everything so you can focus on coaching.</p>
+                    <h3>Everything hadle for you</h3>
+                    <p>When working with our team, our goal is to take as much off your mind and time as possible during the content creation process, so you can focus on high-leverage tasks and actually grow your business.</p>
                     <div class="service-features">
                         <span>Content Creation</span>
                         <span>Social Management</span>
@@ -314,11 +326,7 @@
                     <div class="visual-container">
                         <img src="entregaveis.png" alt="Content Deliverables" loading="lazy">
                         <div class="visual-glow"></div>
-                        <div class="floating-elements">
-                            <div class="floating-element">📱</div>
-                            <div class="floating-element">🎬</div>
-                            <div class="floating-element">📊</div>
-                        </div>
+                        <!-- Floating elements removed as requested -->
                     </div>
                 </div>
             </div>
@@ -335,50 +343,91 @@
             <div class="faq-container">
                 <div class="faq-item">
                     <div class="faq-question">
-                        <span>How does the 100% money-back guarantee work?</span>
+                        <span>Guarantee?</span>
                         <div class="faq-toggle">
                             <div class="toggle-line"></div>
                             <div class="toggle-line"></div>
                         </div>
                     </div>
                     <div class="faq-answer">
-                        <p>If you don't get at least 3 high-paying clients in your first month, I'll refund your money. No questions asked. We're that confident in our ability to deliver results.</p>
+                        <p>Yes, we offer a guarantee to all our clients. We’ve never had to use it, BUT yes — we have a 100% money-back guarantee. If you commit to everything we provide and still don’t get results, we’ll refund all your money. No questions asked.</p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <div class="faq-question">
-                        <span>What makes FitGenious different from other content services?</span>
+                        <span>Commitment</span>
                         <div class="faq-toggle">
                             <div class="toggle-line"></div>
                             <div class="toggle-line"></div>
                         </div>
                     </div>
                     <div class="faq-answer">
-                        <p>We specialize exclusively in fitness coaches and understand the unique challenges and opportunities in this niche. Our proven strategy combines content creation, editing, and distribution specifically designed to attract high-paying clients.</p>
+                        <p>Inside Fitgenious, we like to work with long-term commited clients that are willing to work together for 3–6 months, and even more.</p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <div class="faq-question">
-                        <span>How much time will I need to invest?</span>
+                        <span>I’m already posting content, how is this different?</span>
                         <div class="faq-toggle">
                             <div class="toggle-line"></div>
                             <div class="toggle-line"></div>
                         </div>
                     </div>
                     <div class="faq-answer">
-                        <p>We handle the heavy lifting - strategy, content creation, editing, and posting. You'll just need to participate in our weekly strategy calls (30-45 minutes) and provide any necessary raw footage or information.</p>
+                        <p>Perfect, that shows you’re already a committed person to grow your brand.
+                        We will make your strategy clear, better, and save you time and resources by taking your mind, time, and energy out of the content creation process so you can focus on growing and scaling your business.</p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <div class="faq-question">
-                        <span>Why only 5 spots per month?</span>
+                        <span>What if I’ve tried other content courses or agencies before?</span>
                         <div class="faq-toggle">
                             <div class="toggle-line"></div>
                             <div class="toggle-line"></div>
                         </div>
                     </div>
                     <div class="faq-answer">
-                        <p>We limit our clients to ensure each coach receives personalized attention and maximum results. This allows us to maintain the quality of our service and deliver the exceptional outcomes we're known for.</p>
+                        <p>We get it, and that’s why inside FitGenious we only open spots for 5 clients to ensure premium quality.
+                        Also, that’s why we have the guarantee. I believe if you decide to work with us, we won’t need to use it, but if needed, we’ll give your money back.</p>
+                    </div>
+                </div>
+                <!-- Additional FAQ items from the main site -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Do I need a big following for this to work?</span>
+                        <div class="faq-toggle">
+                            <div class="toggle-line"></div>
+                            <div class="toggle-line"></div>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No, you don’t. That’s a goal that we define and work on when working together. You can start with a brand-new account.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What if I don’t have much time to create content?</span>
+                        <div class="faq-toggle">
+                            <div class="toggle-line"></div>
+                            <div class="toggle-line"></div>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You probably have the time, you’re just not seeing content as a priority right now.
+                        But our team makes it easier and effortless for you to create content without spending more than 3 hours a month on it.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Do you Only work with Fitness coaches?</span>
+                        <div class="faq-toggle">
+                            <div class="toggle-line"></div>
+                            <div class="toggle-line"></div>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we only work with online fitness coaches, because that’s our specialty and focus.
+                        We don’t work with 'business owners' who aren’t fitness coaches, nor with in-person trainers who want to start their personal brand.</p>
                     </div>
                 </div>
             </div>
@@ -419,7 +468,7 @@
             <div class="sticky-cta-content">
                 <div class="sticky-cta-text">
                     <div class="pulse-dot"></div>
-                    <span>Only 5 spots available this month</span>
+                    <span>Only 5 spots available per month.</span>
                 </div>
                 <div class="sticky-cta-buttons">
                     <a href="https://calendly.com/fitgeniouscontent/30min" class="btn btn-primary">Book here</a>
