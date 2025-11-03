@@ -103,34 +103,34 @@ document.querySelectorAll('.magnetic').forEach(button => {
 // =======================
 const videoProjects = [
     { 
-        title: "Client Transformation", 
+        title: "", 
         video: "https://drive.google.com/file/d/1DN0UDSX_0MmgApvPXqztfD4GauZS9efc/preview",
-        description: "Before & after results showcase"
+        description: ""
     },
     { 
-        title: "Workout Routine", 
+        title: "", 
         video: "https://drive.google.com/file/d/1QkHksdwELBSjpKtYGggu3Pa9HPuQlXhH/preview",
-        description: "Professional exercise demonstration"
+        description: ""
     },
     { 
-        title: "Nutrition Guide", 
+        title: "", 
         video: "https://drive.google.com/file/d/1VFbB8V-PuUtluFkEd6tqRmquk5SOdkT4/preview",
-        description: "Meal prep and diet tips"
+        description: ""
     },
     { 
-        title: "Client Testimonial", 
+        title: "", 
         video: "https://drive.google.com/file/d/1YUfpERmbtPE-WFO6Zs5T5LJgE2NxuxyQ/preview",
-        description: "Success story from our client"
+        description: ""
     },
     { 
-        title: "Training Session", 
+        title: "", 
         video: "https://drive.google.com/file/d/1XC1CVlc5fhhA7ir6RWdOZbf7R-RDROEn/preview",
-        description: "One-on-one coaching session"
+        description: ""
     },
     { 
-        title: "Training Session", 
+        title: "", 
         video: "https://drive.google.com/file/d/10T67anXBZd1aiWr0G6_tdLghZqz_348u/preview",
-        description: "One-on-one coaching session"
+        description: ""
     }
 ];
 
@@ -467,29 +467,94 @@ function initVideoAutoSlidePause() {
 // =======================
 const imageProjects = [
     { 
-        title: "Content Creation", 
-        image: "https://drive.google.com/uc?id=SEU_ID_DA_IMAGEM_1",
-        description: "Creating viral fitness content"
+        title: "", 
+        image: "https://drive.google.com/thumbnail?id=1dVURcBp2eHaJXAUqDxU069o_w-eemMBS&sz=w1000",
+        description: ""
     },
     { 
-        title: "Social Media Growth", 
-        image: "https://drive.google.com/uc?id=SEU_ID_DA_IMAGEM_2", 
-        description: "Building engaged communities online"
+        title: "", 
+        image: "https://drive.google.com/thumbnail?id=15aHIEjk9xCkbEOyubccBr6LHFz8daIzS&sz=w1000", 
+        description: ""
     },
     { 
-        title: "Fitness Branding", 
-        image: "https://drive.google.com/uc?id=SEU_ID_DA_IMAGEM_3",
-        description: "Developing successful fitness brands"
+        title: "", 
+        image: "https://drive.google.com/thumbnail?id=1cVidd5E2YtF6EM1h8WowJbJukpzpbneR&sz=w1000",
+        description: ""
     },
     { 
-        title: "Client Results", 
-        image: "https://drive.google.com/uc?id=SEU_ID_DA_IMAGEM_4",
-        description: "Real transformations from our methods"
+        title: "", 
+        image: "https://drive.google.com/thumbnail?id=1ticYkC4LMHyDIlc7Q2pY7sWM41RrHRgb&sz=w1000",
+        description: ""
     },
     { 
-        title: "Content Strategy", 
-        image: "https://drive.google.com/uc?id=SEU_ID_DA_IMAGEM_5",
-        description: "Proven strategies for viral content"
+        title: "", 
+        image: "https://drive.google.com/thumbnail?id=1d6r90Ib_tATdNxx3TMZDu9-7orKibO0Z&sz=w1000",
+        description: ""
+    },
+    { 
+        title: "", 
+        image: "https://drive.google.com/thumbnail?id=1hGqODW9B8C3mO9LIRm5WS6qnjtz33U0A&sz=w1000",
+        description: ""
+    },
+    { 
+        title: "", 
+        image: "https://drive.google.com/thumbnail?id=19XxnWhHzb-_GMrn1tgSRgs5zqx41uVHX&sz=w1000",
+        description: ""
+    },
+    { 
+        title: "", 
+        image: "https://drive.google.com/thumbnail?id=1C6Vn8JnjHRiQG-lLY5MFoeSVYbkKpbUv&sz=w1000",
+        description: ""
+    },
+    { 
+        title: "", 
+        image: "https://drive.google.com/thumbnail?id=1AN7yuK5k-m5Nm7AR_oDAsOzFg6edH1Jw&sz=w1000",
+        description: ""
+    },
+    { 
+        title: "", 
+        image: "https://drive.google.com/thumbnail?id=18ec-EPXghliK9rPIlBiC1Ch6HsOCY3dV&sz=w1000",
+        description: ""
+    },
+    { 
+        title: "", 
+        image: "https://drive.google.com/thumbnail?id=1Yutz1YiJIdfACQXh0fNO39AssthK2eFd&sz=w1000",
+        description: ""
+    },
+    { 
+        title: "", 
+        image: "https://drive.google.com/thumbnail?id=1BWk3dnWJdPnqCmt5uLCuW9rm0Om119AM&sz=w1000",
+        description: ""
+    },
+    { 
+        title: "", 
+        image: "https://drive.google.com/thumbnail?id=1XO0LNtT0OANPqx2ONBlRA_MAKKkhdgtk&sz=w1000",
+        description: ""
+    },
+    { 
+        title: "", 
+        image: "https://drive.google.com/thumbnail?id=1hG_q0NKzWATQSGWx8waUkl_fyZhoNwI3&sz=w1000",
+        description: ""
+    },
+    { 
+        title: "", 
+        image: "https://drive.google.com/thumbnail?id=1EILe8qYSzf1X5hgITnxNgS1ESYi1_4tX&sz=w1000",
+        description: ""
+    },
+    { 
+        title: "", 
+        image: "https://drive.google.com/thumbnail?id=1EK4N2NAo8dBZuq__2axnE6uhsqsXDPe-&sz=w1000",
+        description: ""
+    },
+    { 
+        title: "", 
+        image: "https://drive.google.com/thumbnail?id=14yCEQ4pGPPtbjklVUJKUuwJUomic_1rY&sz=w1000",
+        description: ""
+    },
+    { 
+        title: "", 
+        image: "https://drive.google.com/thumbnail?id=1-lYzH8zwcmeRwzyItvLrWHg3bp9wX8Jq&sz=w1000",
+        description: ""
     }
 ];
 
@@ -689,7 +754,11 @@ function goToImageSlide(index) {
 }
 
 function nextImageSlide() { 
-    currentImageSlide = (currentImageSlide + 1) % totalImageSlides; 
+    if (currentImageSlide < totalImageSlides - 1) {
+        currentImageSlide = currentImageSlide + 1; // Avança normalmente
+    } else {
+        currentImageSlide = 0; // Volta para o primeiro slide quando chega no último
+    }
     updateImageCarousel(); 
     updateImageIndicators(); 
     updateImageControlButtons(); 
@@ -977,3 +1046,4 @@ window.testGemini = async function() {
     console.log('🧪 Resposta do teste:', response);
 };
 setTimeout(() => { console.log('🧪 Iniciando teste automático do Gemini...'); window.testGemini(); }, 2000);
+
